@@ -1,38 +1,49 @@
 import todoAppReducer from "./todoAppReducer";
-import {createStore} from "./Redux";
-import throttle from "lodash/throttle";
+// import {createStore} from "./Redux";
+import {applyMiddleware, createStore} from 'redux';
+
+import promise from 'redux-promise';
+import createLogger from 'redux-logger';
+// import throttle from "lodash/throttle";
 // import {loadState, saveState} from "./localStorage";
 
-const addLoggingToDispatch = store => {
-    const rawDispatch = store.dispatch;
-    if(!console.group) return rawDispatch;
+// const logger = store => {
+//     return (next) => {
+//         if(!console.group) return next;
+//         return (action) => {
+//             console.group(action.type);
+//             console.log('%c prev state ', 'color : gray', store.getState());
+//             console.log('%c action ', 'color:blue', action);
+//             const returnValue = next(action);
+//             console.log('%c next state ', 'color:green', store.getState());
+//             console.groupEnd(action.type);
+//             return returnValue;
+//         }
+//     }
+// };
+//
+// const promise = (store) => (next) => (action) => {
+//     if (typeof action.then === 'function') {
+//         return action.then(next);
+//     }
+//     return next(action);
+// };
 
-    return (action) => {
-        console.group(action.type);
-        console.log('%c prev state ', 'color : gray', store.getState());
-        console.log('%c action ', 'color:blue', action);
-        const returnValue = rawDispatch(action);
-        console.log('%c next state ', 'color:green', store.getState());
-        console.groupEnd(action.type);
-        return returnValue;
-    }
-};
+// const wrapDispatchWithMiddlewares = (store, middlewares) => {
+//     middlewares.slice().reverse().forEach(middleware => store.dispatch = middleware(store)(store.dispatch));
+// }
 
 const configureStore = () => {
-    // const persistedState = loadState();
-    // const store = createStore(todoAppReducer, persistedState);
-    const store = createStore(todoAppReducer);
+    const middlewares = [promise];
 
     if (process.env.NODE_ENV !== 'production') {
-        store.dispatch = addLoggingToDispatch(store);
+        middlewares.push(createLogger());
     }
 
-    // store.subscribe(throttle(() => {
-    //     saveState({
-    //         todos : store.getState().todos
-    //     });
-    // }, 1000));
-    return store;
+    return createStore(
+        todoAppReducer,
+        applyMiddleware(...middlewares)
+    );
 };
 
 export default configureStore;
