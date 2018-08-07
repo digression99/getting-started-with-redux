@@ -1,6 +1,7 @@
 
 import uuidv4 from 'uuid/v4';
 import * as api from './api';
+import { getIsFetching } from "./todoAppReducer";
 
 export const addTodo = text => ({ type: 'ADD_TODO', id: uuidv4(), text});
 // export const setVisibilityFilter = filter => ({ type : 'SET_VISIBILITY_FILTER', filter });
@@ -19,7 +20,11 @@ const receiveTodos = (filter, response) => ({
     response
 });
 
-export const fetchTodos = (filter) => (dispatch) => {
+export const fetchTodos = (filter) => (dispatch, getState) => {
+    if (getIsFetching(getState(), filter)) {
+        return;
+    }
+
     dispatch(requestTodos(filter));
 
     api.fetchTodos(filter).then(response => {
