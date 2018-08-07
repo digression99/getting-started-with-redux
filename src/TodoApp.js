@@ -1,7 +1,7 @@
 
 import React from 'react';
 import {connect} from "react-redux";
-import {addTodo} from './TodoAppAction';
+import {addTodo} from './todoAppAction';
 import VisibleTodoList from './VisibleTodoList';
 import AddTodo from './AddTodo';
 import Footer from './Footer';

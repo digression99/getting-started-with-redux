@@ -33,12 +33,17 @@ import createLogger from 'redux-logger';
 //     middlewares.slice().reverse().forEach(middleware => store.dispatch = middleware(store)(store.dispatch));
 // }
 
+const thunk = (store) => (next) => (action) =>
+    typeof action === 'function' ? action(store.dispatch) :
+    next(action);
+
 const configureStore = () => {
-    const middlewares = [promise];
+    const middlewares = [thunk];
 
     if (process.env.NODE_ENV !== 'production') {
-        middlewares.push(createLogger());
+        middlewares.push(createLogger);
     }
+    console.log('middlewares : ', middlewares);
 
     return createStore(
         todoAppReducer,

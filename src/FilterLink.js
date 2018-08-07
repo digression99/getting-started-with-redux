@@ -15,15 +15,3 @@ const FilterLink = ({ filter, children }) => (
 );
 
 export default FilterLink;
-
-
-// import {connect} from "react-redux";
-// import {setVisibilityFilter} from "./TodoAppAction";
-// import Link from './Link';
-//
-// export default connect(
-//     // mapStateToProps
-//     (state, ownProps) => ({active : ownProps.filter === state.visibilityFilter}),
-//     // mapDispatchToProps
-//     (dispatch, ownProps) => ({onClick : () => dispatch(setVisibilityFilter(ownProps.filter))})
-// )(Link);
