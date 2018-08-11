@@ -1,26 +1,30 @@
 import React from 'react';
 
-const Todo = ({onClick, text, completed, onButtonClick}) => (
-    <div>
-        <li
-            onClick={onClick}
-            style={{
-                textDecoration : completed ? 'line-through' : 'none',
-                display : 'inline-block'
-            }}
-        >{text}</li>
-        <button style={{ display:'inline-block'}} onClick={onButtonClick}>Delete</button>
-    </div>
-);
+import Todo from './Todo';
 
-const TodoList = ({ todos, onTodoClick, onButtonClick }) => (
+// const Todo = ({onClick, text, completed, onDeleteButtonClick, onEditButtonClick}) => (
+//     <div>
+//         <li
+//             onClick={onClick}
+//             style={{
+//                 textDecoration : completed ? 'line-through' : 'none',
+//                 display : 'inline-block'
+//             }}
+//         >{text}</li>
+//         <button style={{ display:'inline-block'}} onClick={onDeleteButtonClick}>Delete</button>
+//         <button style={{ display:'inline-block'}} onClick={onEditButtonClick}>Edit</button>
+//     </div>
+// );
+
+const TodoList = ({ todos, onTodoClick, onDeleteButtonClick }) => (
     <ul>
         {todos.map(todo =>
             <Todo
                 key={todo.id}
                 {...todo}
                 onClick={() => onTodoClick(todo.id)}
-                onButtonClick={() => onButtonClick(todo.id)}
+                onDeleteButtonClick={() => onDeleteButtonClick(todo.id)}
+                // onEditButtonClick={() => onEditButtonClick(todo.id)}
             />
         )}
     </ul>

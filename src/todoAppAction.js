@@ -5,9 +5,6 @@ import * as api from './api';
 import { getIsFetching } from "./todoAppReducer";
 import * as schema from './schema';
 
-
-export const deleteTodo = id => ({ type : 'DELETE_TODO', id});
-
 export const addTodo = (text) => (dispatch) =>
     api.addTodo(text).then(response => {
         console.log('normalized response', normalize(response, schema.todo));
@@ -49,5 +46,13 @@ export const toggleTodo = (id) => (dispatch) =>
         dispatch({
             type : 'TOGGLE_TODO_SUCCESS',
             response : normalize(response, schema.todo)
+        })
+    });
+
+export const deleteTodo = (id) => (dispatch) =>
+    api.deleteTodo(id).then(response => {
+        dispatch({
+            type : 'DELETE_TODO_SUCCESS',
+            id
         })
     });

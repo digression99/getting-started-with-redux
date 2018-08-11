@@ -28,6 +28,9 @@ const createList = (filter) => {
                     state;
             case 'TOGGLE_TODO_SUCCESS':
                 return handleToggle(state, action);
+            case 'DELETE_TODO_SUCCESS':
+                return state.filter(id => id !== action.id);
+                // return state; // already not in the state?
             default:
                 return state;
         }

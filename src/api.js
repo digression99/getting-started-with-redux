@@ -20,7 +20,7 @@ const fakeDatabase = {
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-export const fetchTodos = (filter) => delay(500).then(() => {
+export const fetchTodos = (filter) => delay(100).then(() => {
     // if (Math.random() > 0.5) {
     //     throw new Error('boom!');
     // }
@@ -36,7 +36,7 @@ export const fetchTodos = (filter) => delay(500).then(() => {
     }
 });
 
-export const addTodo = (text) => delay(500).then(() => {
+export const addTodo = (text) => delay(100).then(() => {
     const todo = {
         id : uuidv4(),
         text,
@@ -46,12 +46,16 @@ export const addTodo = (text) => delay(500).then(() => {
     return todo;
 });
 
-export const toggleTodo = (id) => delay(500).then(() => {
+export const toggleTodo = (id) => delay(100).then(() => {
     const todo = fakeDatabase.todos.find(t => t.id === id);
     todo.completed = !todo.completed;
     return todo;
 });
 
+export const deleteTodo = (id) => delay(100).then(() => {
+    fakeDatabase.todos = fakeDatabase.todos.filter(t => t.id !== id);
+    return true;
+});
 
 
 
